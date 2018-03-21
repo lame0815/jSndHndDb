@@ -1,0 +1,61 @@
+entity Kunde {
+	vorname String required,
+    name String required,
+    strasse String required,
+    hausnummer String required,
+    plz String required,
+    ort String required,
+    telefon String required,
+    mobil String required,
+    mail String required,
+    anmerkung String,
+    iban String,
+    zahlungsempfaenger String,
+    geldinstitut String,
+    bic String    
+}
+
+entity Produkte {
+    verkaufspreis Float required,
+    farbegroesse String,
+    erfasstAm Date required,
+    anmerkung String,
+    einkaufspreis Float,
+    zurueckgegebenAm Date,
+    verkaufsdatum Date,    
+}
+
+entity Produkttyp {
+	produktbezeichnung String required
+}
+
+entity Auszahlung {
+   datum Date required,
+   auszahlung Float required
+}
+
+relationship OneToMany {
+	Auszahlung{produkt} to	
+	Produkte
+}
+
+relationship OneToMany {
+	Produkte{kunde} to	
+	Kunde
+}
+
+relationship OneToMany {
+	Produkte{produkttyp} to	
+	Produkttyp
+}
+
+
+// Set pagination options
+paginate Produkte, Kunde with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with scndhnddb
